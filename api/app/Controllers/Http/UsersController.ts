@@ -1,5 +1,7 @@
-import UserServices from 'App/Services/UserServices';
 import BasesController from './BasesController';
+import CreateUserValidator from 'App/Validators/CreateUserValidator';
+import UserServices from 'App/Services/UserServices';
+
 
 export default class UsersController extends BasesController {
   constructor() {
@@ -11,15 +13,7 @@ export default class UsersController extends BasesController {
 
   async register({ request }) {
     try {
-      const requiredFields = [
-        'name',
-        'email',
-        'password',
-        'passwordConfirmation',
-        'rg',
-        'cpf',
-        'number',
-      ]
+      await request.validate(CreateUserValidator)
 
       const data = request.except(['passwordConfirmation'])
       const resp = await UserServices.create(data)
