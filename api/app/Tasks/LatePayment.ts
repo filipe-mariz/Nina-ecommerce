@@ -8,10 +8,7 @@ export default class LatePayment extends BaseTask {
     return '* * * * * *'
     //0 0 12 ? * TUE * toda terça de 12:00
   }
-  /**
-   * Set enable use .lock file for block run retry task
-   * Lock file save to `build/tmpTaskLock`
-   */
+
   public static get useLock() {
     return false
   }

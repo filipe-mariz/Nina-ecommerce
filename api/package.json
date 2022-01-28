@@ -37,6 +37,7 @@
     "@adonisjs/repl": "^1.0.0",
     "adonis5-scheduler": "^2.0.2",
     "axios": "^0.21.1",
+    "chalk": "^5.0.0",
     "execa": "^5.1.1",
     "googleapis": "39",
     "luxon": "^1.26.0",

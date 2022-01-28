@@ -1,9 +1,15 @@
-import User from 'App/Models/User'
+import UserServices from 'App/Services/UserServices';
+import BasesController from './BasesController';
 
-export default class UsersController {
+export default class UsersController extends BasesController {
+  constructor() {
+    super();
+
+    this.handleResponse;
+    this.handleError;
+  };
+
   async register({ request }) {
-    User.connection = request.tenantConnection;
-
     try {
       const requiredFields = [
         'name',
@@ -14,32 +20,17 @@ export default class UsersController {
         'cpf',
         'number',
       ]
-  
-      const modelCreationData = request.except(['passwordConfirmation'])
-      const data = request.only(requiredFields)
 
-      requiredFields.forEach(field => {        
-        if (!data[field]) {
-          return 'FIELD_REQUIRED';
-        }
-      });
-  
-      if (data.password !== data.passwordConfirmation) {
-        return 'INVALID_PASSWORD_CONFIRMATION';
-      }
-  
-      return await User.create(modelCreationData);
+      const data = request.except(['passwordConfirmation'])
+      const resp = await UserServices.create(data)
 
+      return this.handleResponse(resp)
     } catch (error) {
-      console.log(error);
-      
-      return error
+      return this.handleError;
     }
-  }
+  };
 
   async index({ params, request }) {
-    User.connection = request.tenantConnection
-
     try {
       const filter = {
         id: params.user_id,
@@ -49,76 +40,44 @@ export default class UsersController {
 
       params.user_id ? filter : delete filter.id;
 
-      return await User.query()
-        .where(filter)
-        .select('id', 'name', 'email', 'rg', 'cpf', 'number')
-        .orderBy('name', 'asc')
-      
+      const resp = await UserServices.find(filter);
+
+      return this.handleResponse(resp)
     } catch (error) {
-      return error;
+      return this.handleError;
     }
-  }
+  };
 
   async update({ request, params }) {
-    User.connection = request.tenantConnection
-
     try {
-      return await User.query()
-        .where({
+      const filter = {
           id: params.company_id,
           deleted_at: false,
           company_id: request.header('company_id')
-        })
-        .update(request.all());
-    } catch (error) {
-      return error
-    }
-  }
-
-  async updatePassword({ request, response }) {
-    User.connection = request.tenantConnection
-
-    const requiredFields = ['password', 'passwordConfirmation', 'email']
-
-    const data = request.only(requiredFields)
-
-    for (const field of requiredFields) {
-      if (!data[field]) {
-        return response.status(400).json({
-          MissingParamError: `MISSING PROPERTY ${field} ON BODY`,
-          Solution: 'Adding this field to the body may solve the problem',
-        })
       }
+      const changes = request.all();
+
+      const resp = await UserServices.update(filter, changes);
+      
+      return this.handleResponse(resp);
+    } catch (error) {
+      return this.handleError(error);
     }
-
-    if (data.password !== data.passwordConfirmation) {
-      return response.status(400).json({
-        InvalidParamError: `INVALID PROPERTY passwordConfirmation ON BODY`,
-        Solution:
-          'The password and passwordConfirmation did not match, are you sure that they are the same?',
-      })
-    }
-
-    const user = await User.findByOrFail('email', data.email)
-
-    user.password = data.password
-
-    await user.save()
-
-    return user
-  }
+  };
 
   async delete({ params, request }) {
-    User.connection = request.tenantConnection
-    
     try {      
-      return await User.query()
-        .where('user_id', params.user_id)
-        .whereNull('deleted_at')
-        .update({ deleted_at: true })
-    } catch (error) {
-      return error
-    }
-  }
+      const filter = {
+        id: params.company_id,
+        deleted_at: false,
+        company_id: request.header('company_id')
+      }
 
-}
+      const resp = await UserServices.delete(filter);
+
+      return this.handleResponse(resp)
+    } catch (error) {
+      return this.handleError(error);
+    }
+  };
+};

@@ -31,7 +31,7 @@ export default class CompaniesController {
 
             params.company_id ? filter : delete filter.id;
 
-            return Company.query()
+            return await Company.query()
                 .where(filter)
                 .select('id', 'name', 'cnpj', 'email', 'number')
                 .orderBy('name', 'asc')

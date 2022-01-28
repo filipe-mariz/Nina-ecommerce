@@ -10,7 +10,7 @@ export default class Companies extends BaseSchema {
     try {
       this.schema.createTable(this.tableName, table => {
         table.uuid('id').primary().index();
-        table.string('name').notNullable().unique();
+        table.string('name').notNullable();
         table.string('cnpj').notNullable().unique();
         table.string('email').unique();
         table.string('number');
