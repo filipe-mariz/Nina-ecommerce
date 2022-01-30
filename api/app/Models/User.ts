@@ -34,6 +34,9 @@ export default class User extends BaseModel {
   public number: string
 
   @column()
+  public instagram: string;
+
+  @column()
   public is_admin: boolean
 
   @column()
