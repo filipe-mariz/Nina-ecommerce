@@ -44,12 +44,12 @@ export default class UsersController extends BasesController {
 
   async update({ request, params }) {
     try {
+      const changes = request.all();
       const filter = {
           id: params.company_id,
           deleted_at: false,
           company_id: request.header('company_id')
       }
-      const changes = request.all();
 
       const resp = await UserServices.update(filter, changes);
       

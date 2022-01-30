@@ -1,8 +1,15 @@
-import Company from "App/Models/Company";
+import BasesController from "./BasesController";
+import CompanyService from "App/Services/CompanyService";
 
-export default class CompaniesController {
+export default class CompaniesController extends BasesController {
+    constructor () {
+        super()
+
+        this.handleResponse;
+        this.handleError;
+    };
+
     async register({ request }) {
-        Company.connection = request.tenantConnection;
         
         try {
             const requiredFields = [ 'name', 'cnpj']
@@ -14,15 +21,13 @@ export default class CompaniesController {
                 }
             });
 
-            return await Company.create(data);
+            return await CompanyService.create(data);
         } catch (error) {
             return error
         }
     }
 
-    async index({ request, params }) {
-        Company.connection = request.tenantConnection;
-
+    async index({ params }) {
         try {
             const filter = {
                 id: params.company_id,
@@ -31,42 +36,42 @@ export default class CompaniesController {
 
             params.company_id ? filter : delete filter.id;
 
-            return await Company.query()
-                .where(filter)
-                .select('id', 'name', 'cnpj', 'email', 'number')
-                .orderBy('name', 'asc')
+            const resp = await CompanyService.find(filter);
+
+            return this.handleResponse(resp);
         } catch (error) {
-            return error;
+            return this.handleError(error);
         }
     }
 
     async update({ request, params }) {
         try {
-            Company.connection = request.tenantConnection;
+            const changes = request.all();
+            const filter = {
+                id: params.company_id,
+                deleted_at: false,
+            };
+            
+            const resp = await CompanyService.update(filter, changes);
 
-            return Company.query()
-                .where({
-                    id: params.company_id,
-                    deleted_at: false,
-                })
-                .update(request.all())
+            return this.handleResponse(resp);
         } catch (error) {
-            return error;
+            return this.handleError(error);
         }
     }
 
-    async destroy({ request, params }) {
+    async destroy({ params }) {
         try {
-            Company.connection = request.tenantConnection;
+            const filter = {
+                id: params.company_id,
+                deleted_at: false,
+            }
+            
+            const resp = await CompanyService.delete(filter);
 
-            return Company.query()
-                .where({
-                    id: params.company_id,
-                    deleted_at: false,
-                })
-                .update({ deleted_at: true })
+            return this.handleResponse(resp);
         } catch (error) {
-            return error
+            return this.handleError(error);
         }
     }
 }
