@@ -2,6 +2,7 @@ import uuid from 'uuid/v4'
 import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
+import Client from './Client'
 
 export default class Company extends BaseModel {
   public static connection = 'pg'
@@ -32,7 +33,10 @@ export default class Company extends BaseModel {
   public updatedAt: DateTime
 
   @hasMany(() => User)
-  public posts: HasMany<typeof User>
+  public user: HasMany<typeof User>
+
+  @hasMany(() => Client)
+  public clients: HasMany<typeof Client>
 
   @beforeCreate()
   public static assignUuid(company: Company) {

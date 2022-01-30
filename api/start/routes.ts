@@ -22,4 +22,11 @@ Route.group(() => {
     Route.put('/:company_id', 'CompaniesController.update');
     Route.put('/delete/:company_id', 'CompaniesController.destroy')
   }).prefix('/company')
+
+  Route.group(() => {
+    Route.post('/', 'ClientsController.register');
+    Route.get('/:client_id?', 'ClientsController.index');
+    Route.put('/:client_id', 'ClientsController.update');
+    Route.delete('/:client_id', 'ClientsController.delete');
+  }).prefix('/client')
 }).prefix('/admin').middleware(['tenantHandler'])
