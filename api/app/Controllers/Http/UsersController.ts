@@ -52,7 +52,7 @@ export default class UsersController extends BasesController {
       }
 
       const resp = await UserServices.update(filter, changes);
-      
+
       return this.handleResponse(resp);
     } catch (error) {
       return this.handleError(error);
@@ -60,7 +60,7 @@ export default class UsersController extends BasesController {
   };
 
   async delete({ params, request }) {
-    try {      
+    try {
       const filter = {
         id: params.company_id,
         deleted_at: false,

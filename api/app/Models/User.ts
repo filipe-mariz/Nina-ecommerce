@@ -6,7 +6,10 @@ import {
   column,
   beforeCreate,
   beforeSave,
+  hasMany,
+  HasMany,
 } from '@ioc:Adonis/Lucid/Orm'
+import ClientAdress from './ClientAdress'
 
 export default class User extends BaseModel {
   public static connection = 'pg'
@@ -50,6 +53,9 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @hasMany(() => ClientAdress)
+  public adress: HasMany<typeof ClientAdress>
 
   @beforeCreate()
   public static assignUuid(user: User) {

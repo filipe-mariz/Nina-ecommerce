@@ -18,7 +18,7 @@ class ClientServices extends HandleServices {
             .where(filter)
             .orderBy('name', 'asc')
             .paginate(page, 10)
-        
+
         if (!client) {
             return this.handleExeption('NO_RESULTS')
         }
@@ -30,7 +30,7 @@ class ClientServices extends HandleServices {
         const client = await Client.query()
             .where(filter)
             .update(changes)
-        
+
         if (!client) {
             return this.handleExeption('NO_RESULTS')
         }

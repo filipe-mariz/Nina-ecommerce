@@ -30,12 +30,12 @@ class UserServices extends HandleServices {
         const user = await User.query()
             .where(filter)
             .update(changes)
-        
+
             if (!user) {
                 return this.handleExeption('NO_RESULTS')
             }
-    
-            return user
+
+        return user
     }
 
     delete(filter: object) {

@@ -29,7 +29,7 @@ class CompanyServices extends HandleServices {
         const company = await Company.query()
             .where(filter)
             .update(changes)
-        
+
         if (!company) {
             return this.handleExeption('NO_RESULTS')
         }

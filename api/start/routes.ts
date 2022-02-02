@@ -24,9 +24,17 @@ Route.group(() => {
   }).prefix('/company')
 
   Route.group(() => {
-    Route.post('/', 'ClientsController.register');
-    Route.get('/:client_id?', 'ClientsController.index');
-    Route.put('/:client_id', 'ClientsController.update');
-    Route.delete('/:client_id', 'ClientsController.delete');
+    Route.group(() => {
+      Route.post('/', 'ClientsController.register');
+      Route.get('/:client_id?', 'ClientsController.index');
+      Route.put('/:client_id', 'ClientsController.update');
+      Route.put('/delete/:client_id', 'ClientsController.put');
+    });
+    Route.group(() => {
+      Route.post('/', 'ClientAdressesController.register');
+      Route.get('/:client_adress_id?', 'ClientAdressesController.index');
+      Route.put('/:client_adress_id', 'ClientAdressesController.update');
+      Route.put('/delete/:client_adress_id', 'ClientAdressesController.delete');
+    }).prefix('/adress' );
   }).prefix('/client')
 }).prefix('/admin').middleware(['tenantHandler'])
