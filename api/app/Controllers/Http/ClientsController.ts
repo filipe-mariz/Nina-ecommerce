@@ -9,7 +9,7 @@ export default class ClientsController extends BasesController {
         this.handleError;
     }
 
-    async register ({ request }) { 
+    async register ({ request }) {
         try {
             const data = request.except([ 'passwordConfirmation '])
 

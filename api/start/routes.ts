@@ -24,6 +24,13 @@ Route.group(() => {
   }).prefix('/company')
 
   Route.group(() => {
+    Route.post('/', 'CompaniesController.register');
+    Route.get('/:company_id?', 'CompaniesController.index');
+    Route.put('/:company_id', 'CompaniesController.update');
+    Route.put('/delete/:company_id', 'CompaniesController.destroy')
+  }).prefix('/categories')
+
+  Route.group(() => {
     Route.group(() => {
       Route.post('/', 'ClientsController.register');
       Route.get('/:client_id?', 'ClientsController.index');

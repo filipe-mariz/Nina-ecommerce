@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Client from './Client'
-
+import Category from './Category'
 export default class Company extends BaseModel {
   public static connection = 'pg'
   public static selfAssignPrimaryKey = true
@@ -37,6 +37,9 @@ export default class Company extends BaseModel {
 
   @hasMany(() => Client)
   public clients: HasMany<typeof Client>
+
+  @hasMany(() => Category)
+  public Category: HasMany<typeof Category>
 
   @beforeCreate()
   public static assignUuid(company: Company) {
