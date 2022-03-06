@@ -20,6 +20,9 @@ export default class Category extends BaseModel {
   @column()
   public companyId: string;
 
+  @column()
+  public deletedAt: Date;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

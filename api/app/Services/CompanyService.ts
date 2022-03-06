@@ -1,5 +1,6 @@
 import Company from "App/Models/Company";
 import HandleServices from './BaseServices';
+import moment from 'moment';
 
 class CompanyServices extends HandleServices {
     constructor () {
@@ -40,7 +41,7 @@ class CompanyServices extends HandleServices {
     delete (filter: object) {
         return Company.query()
             .where(filter)
-            .update({ deleted_at: true });
+            .update({ deleted_at: moment() });
     }
 };
 

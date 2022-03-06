@@ -14,6 +14,7 @@ export default class Categories extends BaseSchema {
         table.string('name').notNullable();
         table.string('description').notNullable();
         table.string('company_id').notNullable();
+        table.date('deleted_at')
         table.timestamps(true)
       })
 
