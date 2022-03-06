@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import Product from './Product'
 
 export default class Category extends BaseModel {
   public static connection = 'pg'
@@ -22,6 +23,9 @@ export default class Category extends BaseModel {
 
   @column()
   public deletedAt: Date;
+
+  @hasMany(() => Product)
+  public Product: HasMany<typeof Product>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

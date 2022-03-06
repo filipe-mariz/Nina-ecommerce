@@ -24,10 +24,17 @@ Route.group(() => {
   }).prefix('/company')
 
   Route.group(() => {
-    Route.post('/', 'CompaniesController.register');
-    Route.get('/:company_id?', 'CompaniesController.index');
-    Route.put('/:company_id', 'CompaniesController.update');
-    Route.put('/delete/:company_id', 'CompaniesController.destroy')
+    Route.post('/', 'CategoriesController.register');
+    Route.get('/:company_id?', 'CategoriesController.index');
+    Route.put('/:company_id', 'CategoriesController.update');
+    Route.put('/delete/:company_id', 'CategoriesController.destroy')
+  }).prefix('/categories')
+
+  Route.group(() => {
+    Route.post('/', 'ProductsController.register');
+    Route.get('/:product_id?', 'ProductsController.index');
+    Route.put('/:product_id', 'ProductsController.update');
+    Route.put('/delete/:product_id', 'ProductsController.destroy')
   }).prefix('/categories')
 
   Route.group(() => {

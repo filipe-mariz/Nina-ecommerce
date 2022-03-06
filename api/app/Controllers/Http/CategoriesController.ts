@@ -38,11 +38,11 @@ export default class CategoriesController extends BasesController {
 
     async update ({ request, params }) {
         try {
+            const changes = request.all();
             const filter = {
                 id: params.category_id,
                 company_id: request.header('company_id')
             }
-            const changes = request.all();
 
             const resp = await CategoriesServices.update(filter, changes);
 

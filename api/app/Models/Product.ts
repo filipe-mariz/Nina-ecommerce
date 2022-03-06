@@ -2,36 +2,36 @@ import uuid from 'uuid/v4'
 import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Client extends BaseModel {
+export default class Product extends BaseModel {
   public static connection = 'pg'
   public static selfAssignPrimaryKey = true
 
   @column({ isPrimary: true })
-  public id: string;
+  public id: string
+
+  @column()
+  public product_code: string;
 
   @column()
   public name: string;
 
   @column()
-  public born: Date;
+  public price: string;
 
   @column()
-  public cpf: string
+  public image_link: string;
 
   @column()
-  public email: string;
+  public description: string;
 
   @column()
-  public phone: string;
-
-  @column()
-  public password: string;
-
-  @column()
-  public is_deleted: boolean;
+  public category_id: string;
 
   @column()
   public company_id: string;
+
+  @column()
+  public deleted_at: Date;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -40,7 +40,7 @@ export default class Client extends BaseModel {
   public updatedAt: DateTime
 
   @beforeCreate()
-  public static assignUuid(client: Client) {
-    client.id = uuid()
+  public static assignUuid(product: Product) {
+    product.id = uuid()
   }
 }

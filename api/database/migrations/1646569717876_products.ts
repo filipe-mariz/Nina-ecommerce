@@ -1,20 +1,27 @@
 import Database from '@ioc:Adonis/Lucid/Database';
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Categories extends BaseSchema {
-  protected tableName = 'categories'
+export default class Products extends BaseSchema {
+  protected tableName = 'products'
 
   public async up () {
     const transaction = await Database.transaction();
 
     try {
       this.schema.createTable(this.tableName, table => {
-        table.increments('id').primary().index();
-        table.string('code').notNullable();
+        table.uuid('id').index().primary();
+        table.string('product_code', 5).notNullable();
         table.string('name').notNullable();
-        table.string('description').notNullable();
+        table.string('price').notNullable();
+        table.string('image_link').notNullable();
+        table.string('description')
+        table.string('category_id')
+          .references('categories')
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE')
+          .notNullable();
         table.string('company_id').notNullable();
-        table.date('deleted_at')
+        table.date('deleted_at').defaultTo(null);
         table.timestamps(true)
       })
 

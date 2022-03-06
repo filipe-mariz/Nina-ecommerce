@@ -10,12 +10,12 @@ export default class CompaniesController extends BasesController {
     };
 
     async register({ request }) {
-        
+
         try {
             const requiredFields = [ 'name', 'cnpj']
             const data = request.all();
-            
-            requiredFields.forEach(field => {        
+
+            requiredFields.forEach(field => {
                 if (!data[field]) {
                     return 'FIELD_REQUIRED';
                 }
@@ -51,7 +51,7 @@ export default class CompaniesController extends BasesController {
                 id: params.company_id,
                 deleted_at: false,
             };
-            
+
             const resp = await CompanyService.update(filter, changes);
 
             return this.handleResponse(resp);
@@ -66,7 +66,7 @@ export default class CompaniesController extends BasesController {
                 id: params.company_id,
                 deleted_at: false,
             }
-            
+
             const resp = await CompanyService.delete(filter);
 
             return this.handleResponse(resp);

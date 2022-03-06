@@ -4,6 +4,7 @@ import { BaseModel, beforeCreate, column, hasMany, HasMany } from '@ioc:Adonis/L
 import User from './User'
 import Client from './Client'
 import Category from './Category'
+import Product from './Product'
 export default class Company extends BaseModel {
   public static connection = 'pg'
   public static selfAssignPrimaryKey = true
@@ -40,6 +41,9 @@ export default class Company extends BaseModel {
 
   @hasMany(() => Category)
   public Category: HasMany<typeof Category>
+
+  @hasMany(() => Product)
+  public Product: HasMany<typeof Product>
 
   @beforeCreate()
   public static assignUuid(company: Company) {
