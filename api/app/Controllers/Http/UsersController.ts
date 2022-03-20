@@ -30,7 +30,7 @@ export default class UsersController extends BasesController {
         id: params.user_id,
         deleted_at: false,
         company_id: request.header('company_id')
-      };      
+      };
 
       params.user_id ? filter : delete filter.id;
 
