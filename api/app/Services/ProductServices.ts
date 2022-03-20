@@ -33,7 +33,7 @@ class ProductService extends HandleServices {
 
     delete (filter: object) {
         return Product.query()
-            .update({ deleted_at: moment() })
+            .update({ is_deleted: true })
             .where(filter);
     }
 }

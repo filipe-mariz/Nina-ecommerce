@@ -10,7 +10,7 @@ export default class CreateUserValidator {
 		password: schema.string({ trim: true }, [rules.alpha(),rules.maxLength(255), rules.required()]),
 		passwordConfirmation: schema.string({}, [rules.equalTo('password')]),
 		rg: schema.string({ trim: true }, [rules.maxLength(8), rules.required()]),
-		cpf: schema.string({ trim: true }, [rules.alpha(), rules.maxLength(255), rules.required()]),
+		cpf: schema.string({ trim: true }, [rules.alpha(), rules.maxLength(11), rules.required()]),
 		instagram: schema.string({ trim: true}, [rules.exists({ table: 'users', column: 'instagram' })]),
 		company_id: schema.string({ trim: true }, [rules.required()])
 	})

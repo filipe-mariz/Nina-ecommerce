@@ -31,7 +31,7 @@ export default class Product extends BaseModel {
   public company_id: string;
 
   @column()
-  public deleted_at: Date;
+  public is_deleted: boolean;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

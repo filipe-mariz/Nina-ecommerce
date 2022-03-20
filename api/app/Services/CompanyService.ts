@@ -41,7 +41,7 @@ class CompanyServices extends HandleServices {
     delete (filter: object) {
         return Company.query()
             .where(filter)
-            .update({ deleted_at: moment() });
+            .update({ is_deleted: true });
     }
 };
 

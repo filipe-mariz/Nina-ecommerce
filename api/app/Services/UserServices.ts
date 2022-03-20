@@ -41,7 +41,7 @@ class UserServices extends HandleServices {
     delete(filter: object) {
         return User.query()
             .where(filter)
-            .update({ deleted_at: true })
+            .update({ is_deleted: true })
     }
 };
 

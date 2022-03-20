@@ -14,7 +14,7 @@ export default class Companies extends BaseSchema {
         table.string('cnpj').notNullable().unique();
         table.string('email').unique();
         table.string('number');
-        table.boolean('deleted_at').notNullable().defaultTo(false);
+        table.boolean('is_deleted').notNullable().defaultTo(false);
         table.timestamps(true)
       })
       await transaction.commit();

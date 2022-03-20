@@ -18,8 +18,12 @@ export default class ClientAdresses extends BaseSchema {
         table.string('street').notNullable();
         table.string('number').notNullable();
         table.string('complement');
-        table.string('user_id').notNullable();;
         table.boolean('is_deleted').notNullable().defaultTo(false);
+        table.string('user_id')
+          .references('users')
+          .notNullable()
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE')
         table.timestamps(true)
       })
 

@@ -1,5 +1,6 @@
 import BasesController from "./BasesController";
 import ClientServices from "App/Services/ClientServices";
+import ClientValidator from 'App/Validators/ClientValidator';
 
 export default class ClientsController extends BasesController {
     constructor () {
@@ -11,6 +12,8 @@ export default class ClientsController extends BasesController {
 
     async register ({ request }) {
         try {
+            await request.validate(ClientValidator);
+
             const data = request.except([ 'passwordConfirmation '])
 
             const resp = await ClientServices.create(data);
@@ -42,7 +45,9 @@ export default class ClientsController extends BasesController {
 
     async update ({ request, params }) {
         try {
-            const changes = request.all();
+            const data = await request.validate(ClientValidator);
+
+            const changes = data;
             const filter = {
                 id: params.client_id,
                 is_deleted: false,
@@ -56,7 +61,7 @@ export default class ClientsController extends BasesController {
             return this.handleError(error);
         }
     }
-    
+
     async delete({ request, params }) {
         try {
             const filter = {

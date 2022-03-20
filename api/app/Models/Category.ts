@@ -22,7 +22,7 @@ export default class Category extends BaseModel {
   public companyId: string;
 
   @column()
-  public deletedAt: Date;
+  public is_deleted: boolean;
 
   @hasMany(() => Product)
   public Product: HasMany<typeof Product>

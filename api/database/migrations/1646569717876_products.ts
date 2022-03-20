@@ -15,13 +15,13 @@ export default class Products extends BaseSchema {
         table.string('price').notNullable();
         table.string('image_link').notNullable();
         table.string('description')
+        table.date('is_deleted').defaultTo(false);
+        table.string('company_id').notNullable();
         table.string('category_id')
           .references('categories')
           .onDelete('CASCADE')
           .onUpdate('CASCADE')
           .notNullable();
-        table.string('company_id').notNullable();
-        table.date('deleted_at').defaultTo(null);
         table.timestamps(true)
       })
 

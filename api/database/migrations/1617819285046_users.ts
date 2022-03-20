@@ -3,10 +3,10 @@ import Database from '@ioc:Adonis/Lucid/Database';
 
 export default class Users extends BaseSchema {
   protected tableName = 'users'
-  
+
   public async up() {
     const transaction = await Database.transaction();
-  
+
     try {
       this.schema.createTable(this.tableName, table => {
         table.uuid('id').primary().index();
@@ -18,15 +18,19 @@ export default class Users extends BaseSchema {
         table.string('number').notNullable().unique();
         table.string('instagram').unique();
         table.boolean('is_admin').defaultTo(false);
-        table.string('company_id').notNullable();
-        table.boolean('deleted_at').notNullable().defaultTo(false);
+        table.boolean('is_deleted').notNullable().defaultTo(false);
+        table.string('company_id')
+          .references('companies')
+          .notNullable()
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE')
         table.timestamps(true)
       })
 
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
-      
+
     }
   }
 

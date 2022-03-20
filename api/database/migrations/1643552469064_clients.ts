@@ -17,7 +17,11 @@ export default class Clients extends BaseSchema {
         table.string('phone');
         table.string('password').notNullable();
         table.boolean('is_deleted').defaultTo(false);
-        table.string('company_id').notNullable();
+        table.string('company_id')
+          .references('companies')
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE')
+          .notNullable();
         table.timestamps(true)
       })
 
